@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Form System - Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Supabase JavaScript SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+    <div class="login-container">
+        <!-- Student Section -->
+        <div class="login-section student" id="studentSection" role="region" aria-label="Student Login Section">
+            <div class="logo">🎓 EduConnect</div>
+            <button class="back-btn" id="studentBack" style="display: none;" onclick="resetSections()" aria-label="Go back to main view">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-user-graduate" aria-hidden="true"></i>
+                </div>
+                <h2 class="section-title">Student Portal</h2>
+                <p class="section-subtitle">Access your questionnaire and track your progress</p>
+            </div>
+
+            <form class="login-form" id="studentLoginForm" novalidate>
+                <div class="form-group">
+                    <label for="studentUsername" class="form-label">
+                        <i class="fas fa-user" aria-hidden="true"></i> Username
+                    </label>
+                    <div class="input-icon">
+                        <i class="fas fa-user" aria-hidden="true"></i>
+                        <input 
+                            type="text" 
+                            id="studentUsername" 
+                            name="username" 
+                            class="form-input" 
+                            placeholder="Enter your username" 
+                            required 
+                            autocomplete="username"
+                            aria-describedby="studentUsername-error"
+                        >
+                    </div>
+                    <div id="studentUsername-error" class="error-message" role="alert" aria-live="polite"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="studentPassword" class="form-label">
+                        <i class="fas fa-lock" aria-hidden="true"></i> Password
+                    </label>
+                    <div class="input-icon">
+                        <i class="fas fa-lock" aria-hidden="true"></i>
+                        <input 
+                            type="password" 
+                            id="studentPassword" 
+                            name="password" 
+                            class="form-input" 
+                            placeholder="Enter your password" 
+                            required 
+                            autocomplete="current-password"
+                            aria-describedby="studentPassword-error"
+                        >
+                    </div>
+                    <div id="studentPassword-error" class="error-message" role="alert" aria-live="polite"></div>
+                </div>
+
+                <button type="submit" class="login-btn" id="studentLoginBtn" aria-describedby="studentLoginBtn-status">
+                    <i class="fas fa-sign-in-alt" aria-hidden="true"></i> Login to Student Portal
+                </button>
+                
+                <!-- Google Login Button for Students -->
+                <div class="google-login-section">
+                    <p class="or-divider">or</p>
+                    <button type="button" class="google-login-btn" id="studentGoogleLoginBtn">
+                        <i class="fab fa-google"></i> Sign in with Google
+                    </button>
+                </div>
+                
+                <div id="studentLoginBtn-status" class="sr-only" aria-live="polite"></div>
+            </form>
+        </div>
+
+        <!-- Faculty Section -->
+        <div class="login-section faculty" id="facultySection" role="region" aria-label="Faculty Login Section">
+            <button class="back-btn" id="facultyBack" style="display: none;" onclick="resetSections()" aria-label="Go back to main view">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-chalkboard-teacher" aria-hidden="true"></i>
+                </div>
+                <h2 class="section-title">Faculty Portal</h2>
+                <p class="section-subtitle">Manage questions and monitor student progress</p>
+            </div>
+
+            <form class="login-form" id="facultyLoginForm" novalidate>
+                <div class="form-group">
+                    <label for="facultyUsername" class="form-label">
+                        <i class="fas fa-user" aria-hidden="true"></i> Username
+                    </label>
+                    <div class="input-icon">
+                        <i class="fas fa-user" aria-hidden="true"></i>
+                        <input 
+                            type="text" 
+                            id="facultyUsername" 
+                            name="username" 
+                            class="form-input" 
+                            placeholder="Enter your username" 
+                            required 
+                            autocomplete="username"
+                            aria-describedby="facultyUsername-error"
+                        >
+                    </div>
+                    <div id="facultyUsername-error" class="error-message" role="alert" aria-live="polite"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="facultyPassword" class="form-label">
+                        <i class="fas fa-lock" aria-hidden="true"></i> Password
+                    </label>
+                    <div class="input-icon">
+                        <i class="fas fa-lock" aria-hidden="true"></i>
+                        <input 
+                            type="password" 
+                            id="facultyPassword" 
+                            name="password" 
+                            class="form-input" 
+                            placeholder="Enter your password" 
+                            required 
+                            autocomplete="current-password"
+                            aria-describedby="facultyPassword-error"
+                        >
+                    </div>
+                    <div id="facultyPassword-error" class="error-message" role="alert" aria-live="polite"></div>
+                </div>
+
+                <button type="submit" class="login-btn" id="facultyLoginBtn" aria-describedby="facultyLoginBtn-status">
+                    <i class="fas fa-sign-in-alt" aria-hidden="true"></i> Login to Faculty Portal
+                </button>
+                
+                <!-- Google Login Button for Faculty -->
+                <div class="google-login-section">
+                    <p class="or-divider">or</p>
+                    <button type="button" class="google-login-btn" id="facultyGoogleLoginBtn">
+                        <i class="fab fa-google"></i> Sign in with Google
+                    </button>
+                </div>
+                
+                <div id="facultyLoginBtn-status" class="sr-only" aria-live="polite"></div>
+            </form>
+        </div>
+
+        <!-- Demo Credentials Panel -->
+        <div class="demo-credentials show" id="demoCredentials" role="complementary" aria-label="Demo Credentials">
+            <div class="demo-header">
+                <span class="demo-title"><i class="fas fa-key" aria-hidden="true"></i> Demo Credentials</span>
+                <button class="demo-toggle" onclick="toggleDemoPanel()" aria-label="Close demo credentials panel">
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
+            </div>
+            
+            <div class="demo-section">
+                <h4><i class="fas fa-user-graduate" aria-hidden="true"></i> Student Accounts</h4>
+                <div class="demo-account" onclick="useDemoCredentials('student', 'student1', 'student123')" role="button" tabindex="0" onkeypress="if(event.key==='Enter')useDemoCredentials('student', 'student1', 'student123')">
+                    <strong>Demo Student</strong><br>
+                    Username: student1<br>
+                    Password: student123
+                    <button class="demo-use-btn" aria-label="Use demo student credentials">Use</button>
+                </div>
+            </div>
+            
+            <div class="demo-section">
+                <h4><i class="fas fa-chalkboard-teacher" aria-hidden="true"></i> Faculty Accounts</h4>
+                <div class="demo-account" onclick="useDemoCredentials('faculty', 'faculty1', 'faculty123')" role="button" tabindex="0" onkeypress="if(event.key==='Enter')useDemoCredentials('faculty', 'faculty1', 'faculty123')">
+                    <strong>Demo Faculty</strong><br>
+                    Username: faculty1<br>
+                    Password: faculty123
+                    <button class="demo-use-btn" aria-label="Use demo faculty credentials">Use</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notification -->
+        <div id="notification" class="notification" role="alert" aria-live="polite" aria-atomic="true"></div>
+    </div>
+
+    <script src="login.js"></script>
+</body>
+</html>

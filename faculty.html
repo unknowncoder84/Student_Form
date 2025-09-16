@@ -1,0 +1,95 @@
+\\<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Dashboard - College Form System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="sms-theme">
+    <header class="sms-header">
+        <div class="sms-header-inner">
+            <div class="sms-title">
+                <i class="fa-solid fa-chalkboard-user"></i>
+                <span>Faculty Management</span>
+            </div>
+            <p class="sms-subtitle">Manage questions, search students, and use AI assistance</p>
+            <nav class="sms-tabs">
+                <button class="sms-tab nav-tab active" data-tab="questions"><i class="fa-solid fa-list-check"></i> Questions</button>
+                <button class="sms-tab nav-tab" data-tab="search"><i class="fa-solid fa-magnifying-glass"></i> Search Students</button>
+                <button class="sms-tab nav-tab" data-tab="ai"><i class="fa-solid fa-robot"></i> AI Assistant</button>
+            </nav>
+        </div>
+    </header>
+
+    <div id="facultyPage" class="page active">
+        <main class="dashboard-main">
+            <div class="sms-card">
+                <div class="sms-card-header">
+                    <h2><i class="fa-solid fa-chalkboard"></i> Faculty Panel</h2>
+                    <p id="facultyWelcome">Welcome, Faculty!</p>
+                    <div class="sms-card-actions">
+                        <button id="facultyLogoutBtn" class="logout-button"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                    </div>
+                </div>
+
+                <div id="saveNotification" class="save-notification" style="display: none;">
+                    <i class="fas fa-check-circle"></i>
+                    Changes saved successfully!
+                </div>
+
+                <div id="questionsTab" class="tab-content active">
+                    <h3>Question Management</h3>
+                    <p class="tab-description">Lock or unlock questions to control student access. Students cannot see locked questions. You can also set automatic unlock dates for questions.</p>
+                    <div id="questionsList" class="questions-list"></div>
+                </div>
+
+                <div id="searchTab" class="tab-content">
+                    <h3>Student Search</h3>
+                    <p class="tab-description">Search for students by name or username to view their responses.</p>
+                    <div class="search-section">
+                        <div class="search-input-group">
+                            <input type="text" id="searchInput" class="search-input" placeholder="Enter student name or username...">
+                            <button id="searchBtn" class="search-button">Search</button>
+                        </div>
+                        <div id="searchResults" class="search-results" style="display: none;">
+                            <h3>Search Results</h3>
+                            <div id="studentsList" class="students-list"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="aiTab" class="tab-content">
+                    <h3>AI Assistant</h3>
+                    <p class="tab-description">Get help and insights about the form system.</p>
+                    <div class="chatbot-container">
+                        <div class="chat-header">
+                            <div class="ai-avatar"><i class="fas fa-robot"></i></div>
+                            <div class="ai-info">
+                                <h3>AI Assistant</h3>
+                                <span class="status">Online</span>
+                            </div>
+                        </div>
+                        <div id="chatMessages" class="chat-messages">
+                            <div class="message ai-message">
+                                <div class="message-content">
+                                    <p>👋 Hello! I'm your AI assistant for the college form system. How can I help you today?</p>
+                                </div>
+                                <span class="message-time">Just now</span>
+                            </div>
+                        </div>
+                        <div class="chat-input-area">
+                            <input type="text" id="chatInput" class="chat-input" placeholder="Type your message...">
+                            <button id="sendMessageBtn" class="send-button">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="faculty.js"></script>
+</body>
+</html>

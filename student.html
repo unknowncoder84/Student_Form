@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Student Dashboard - College Form System</title>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="styles.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="sms-theme">
+	<header class="sms-header">
+		<div class="sms-header-inner">
+			<div class="sms-title">
+				<i class="fa-solid fa-graduation-cap"></i>
+				<span>Student Management System</span>
+			</div>
+			<p class="sms-subtitle">Manage student information efficiently</p>
+			<nav class="sms-tabs">
+				<button class="sms-tab active"><i class="fa-solid fa-user-plus"></i> Registration</button>
+			</nav>
+		</div>
+	</header>
+
+	<div id="studentPage" class="page active">
+		<main class="dashboard-main">
+			<div class="sms-card">
+				<div class="sms-card-header">
+					<h2><i class="fa-solid fa-id-card-clip"></i> Student Registration</h2>
+					<p id="studentWelcome">Welcome, Student!</p>
+					<div class="sms-card-actions">
+						<button id="saveResponsesBtn" class="save-button"><i class="fas fa-save"></i> Save Responses</button>
+						<button id="logoutBtn" class="logout-button"><i class="fas fa-sign-out-alt"></i> Logout</button>
+					</div>
+				</div>
+
+				<div id="saveNotification" class="save-notification" style="display: none;">
+					<i class="fas fa-check-circle"></i>
+					Responses saved successfully!
+				</div>
+
+				<form id="studentForm" class="student-form grid-two">
+					<!-- Questions render here -->
+				</form>
+			</div>
+		</main>
+	</div>
+
+	<script src="student.js"></script>
+</body>
+</html>

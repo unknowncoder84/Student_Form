@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication Callback</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Supabase JavaScript SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+    <div class="loading-spinner">
+        <i class="fas fa-spinner fa-spin"></i> Completing authentication...
+    </div>
+
+    <script>
+        // Initialize Supabase
+        const SUPABASE_URL = process.env.SUPABASE_URL || 'YOUR_SUPABASE_URL'; // Replace with your Supabase URL
+        const SUPABASE_KEY = process.env.SUPABASE_KEY || 'YOUR_SUPABASE_KEY'; // Replace with your Supabase anon key
+        
+        if (SUPABASE_URL === 'YOUR_SUPABASE_URL' || SUPABASE_KEY === 'YOUR_SUPABASE_KEY') {
+            console.warn('Supabase credentials not configured. Authentication will not work.');
+        }
+        
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // Handle the authentication callback
+        async function handleAuthCallback() {
+            try {
+                // Get the current session
+                const { data: { session }, error } = await supabase.auth.getSession();
+                
+                if (error) {
+                    console.error('Error getting session:', error);
+                    window.location.href = '../login.html';
+                    return;
+                }
+                
+                if (session) {
+                    // Get user info
+                    const { data: { user }, error: userError } = await supabase.auth.getUser();
+                    
+                    if (userError) {
+                        console.error('Error getting user:', userError);
+                        window.location.href = '../login.html';
+                        return;
+                    }
+                    
+                    if (user) {
+                        // Store user info in localStorage
+                        localStorage.setItem('supabase_user', JSON.stringify(user));
+                        
+                        // Check if we have a pending user role
+                        const pendingRole = localStorage.getItem('pending_user_role');
+                        
+                        if (pendingRole) {
+                            // Redirect to profile completion
+                            window.location.href = '../complete-profile.html';
+                        } else {
+                            // Check if user exists in our database
+                            const { data: existingUsers, error: fetchError } = await supabase
+                                .from('users')
+                                .select('*')
+                                .eq('provider_id', user.id)
+                                .eq('provider', 'google')
+                                .limit(1);
+                            
+                            if (fetchError) {
+                                console.error('Error checking user:', fetchError);
+                                window.location.href = '../login.html';
+                                return;
+                            }
+                            
+                            if (existingUsers.length > 0) {
+                                // User exists, redirect to appropriate dashboard
+                                const userRole = existingUsers[0].role;
+                                const token = session.access_token;
+                                
+                                // Store token and user info
+                                localStorage.setItem('token', token);
+                                localStorage.setItem('user', JSON.stringify({
+                                    id: existingUsers[0].id,
+                                    username: existingUsers[0].username,
+                                    role: userRole,
+                                    email: existingUsers[0].email,
+                                    name: existingUsers[0].name
+                                }));
+                                
+                                // Redirect to dashboard
+                                window.location.href = userRole === 'student' ? '../student.html' : '../faculty.html';
+                            } else {
+                                // User doesn't exist, redirect to login with error
+                                window.location.href = '../login.html?error=user_not_found';
+                            }
+                        }
+                    } else {
+                        window.location.href = '../login.html';
+                    }
+                } else {
+                    window.location.href = '../login.html';
+                }
+            } catch (error) {
+                console.error('Error in auth callback:', error);
+                window.location.href = '../login.html';
+            }
+        }
+
+        // Run when page loads
+        document.addEventListener('DOMContentLoaded', handleAuthCallback);
+    </script>
+</body>
+</html>
