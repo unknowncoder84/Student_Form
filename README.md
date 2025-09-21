@@ -247,6 +247,22 @@ The system includes 38 comprehensive questions covering:
 2. Open `index.html` in your browser
 3. The system will work locally with full functionality
 
+### Netlify Deployment
+1. Install Netlify CLI: `npm install -g netlify-cli`
+2. Login to Netlify: `netlify login`
+3. Initialize Netlify project: `netlify init`
+4. Select the following options:
+   - Create & configure a new site
+   - Choose your team
+   - Set the publish directory to `/`
+   - Leave the build command empty
+   - Set the branch to `main`
+5. Set environment variables in Netlify:
+   - `SUPABASE_URL`: Your Supabase project URL
+   - `SUPABASE_KEY`: Your Supabase service role key
+   - `JWT_SECRET`: Your JWT secret key
+6. Deploy to Netlify: `netlify deploy --prod`
+
 ### Production Deployment
 1. Deploy `server.js` to your hosting platform
 2. Update the API base URL in `student.js` and `faculty.js` if needed

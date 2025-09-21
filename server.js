@@ -80,8 +80,7 @@ async function initializeDatabase() {
       console.log('- users');
       console.log('- questions');
       console.log('- student_responses');
-      console.log('');
-      console.log('Run the following SQL in your Supabase SQL editor:');
+      console.log('\nRun the following SQL in your Supabase SQL editor:');
       console.log(`
 -- Create users table
 CREATE TABLE users (
